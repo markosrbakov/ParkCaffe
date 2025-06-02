@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Caffe</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        footer {
+            background-color: #111;
+            color: #ddd;
+            padding: 30px 0;
+            font-size: 1rem;
+            border-top: 5px solid #FFD700;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+            border: none;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .header {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(90deg, #ff8c00, #ffcc00);
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-text h1 {
+            font-size: 64px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.7);
+        }
+
+        .subtext {
+            font-size: 1.5rem;
+            color: #FFD700;
+        }
+
+        .card {
+            background: #1c1c1e;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+
+        .product-card {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .product-card.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .card-body {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .card-body h5 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .card-body p {
+            color: #555;
+        }
+
+        .footer-link {
+            color: gold;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            margin: 0 12px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.3);
+            filter: brightness(1.2);
+        }
+
+        /* Прочистување на Layout-от */
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .map-container {
+            width: 200px;  /* Ширина на мапата */
+            height: 120px; /* Висина на мапата */
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin: 20px auto; /* Центрирање */
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .row {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+
+        }
+
+        footer {
+            background-color: #111;
+            color: #ddd;
+            padding: 30px 0;
+            font-size: 1rem;
+            border-top: 5px solid #FFD700;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: gold;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 1);
+        }
+        .neon-button {
+            background: linear-gradient(90deg, #ff8c00, #ffcc00);
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            padding: 12px 30px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .neon-button:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 1);
+            transform: scale(1.1);
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        }
+        .header-text h1 {
+            font-size: 64px;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes move-left-right {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .fun-facts h3 {
+            animation: move-left-right 1s ease-in-out infinite;
+        }
+        .red-text {
+            color: red;
+        }
+        
+        /* SKROLL KOPCE*/
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        .scroll-to-top button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* Makes the button circular */
+            border: 2px solid #007bff; /* Border style */
+            background-color: transparent; /* No background */
+            color: #007bff; /* Text color */
+            font-size: 24px; /* Adjust text size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .scroll-to-top button:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Изберете Категорија</h1>
+
+
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category }}</h5>
+                        <button class="btn btn-primary" onclick="showCategoryProducts('{{ category }}')">Прикажи продукти</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="row" id="productsSection">
+        {% for product in products %}
+            <div class="col-md-3 mb-4 product-card" data-category="{{ product.kategorija }}">
+                <div class="card">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="path/to/default-image.jpg" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body" style="text-align: center;">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.opis }}</p>
+                        <p class="card-text"><strong>{{ product.cena }} MKD</strong></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="scroll-to-top" id="scrollToTopBtn">
+    <button onclick="scrollToTop()" class="btn neon-button">^</button>
+</div>
+
+<footer class="text-center text-light py-3">
+    <div class="d-flex justify-content-center align-items-center">
+        <p class="mb-0 me-2">Најди не на:</p>
+        <a href="https://www.instagram.com/coffeebar.park" target="_blank">
+            <img src="/media/icons/instagram.png" alt="Instagram" class="social-icon">
+        </a>
+    </div>
+
+    <p class="mt-2" style="font-style: italic;">
+        Информации и резервации: <a href="tel:+38971844880">071 844 880</a>
+    </p>
+    <p class="mt-2">Дизајнирано од:
+        <a href="https://mk.linkedin.com/in/marko-srbakov-a65b43235" target="_blank" class="footer-link">
+            Marko Srbakov
+        </a>
+    </p>
+</footer>
+
+<div id="instagramModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h5 class="modal-title">📢 Следете нè на Instagram или Facebook!</h5>
+            </div>
+            <div class="modal-body">
+                <p>За најнови новости и понуди, следете нè на нашата Instagram или Facebook страна.</p>
+                <a href="https://www.instagram.com/coffeebar.park" target="_blank" class="btn btn-primary">
+                    📸 Посети Instagram
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="closeModal">Затвори</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    function showCategoryProducts(category) {
+        let allProducts = document.querySelectorAll('.product-card');
+        allProducts.forEach(function(product) {
+            product.style.display = 'none';
+            product.classList.remove('show');
+        });
+
+        let categoryProducts = document.querySelectorAll('.product-card[data-category="' + category + '"]');
+        categoryProducts.forEach(function(product) {
+            product.style.display = 'block';
+            setTimeout(function() {
+                product.classList.add('show');
+            }, 100);
+        });
+
+
+        document.getElementById('productsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Show the button when the user scrolls down 300px
+    window.onscroll = function() {
+        let button = document.getElementById("scrollToTopBtn");
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // По 120 секунди (2 минути) се прикажува попапот
+        setTimeout(function () {
+            var modal = new bootstrap.Modal(document.getElementById("instagramModal"));
+            modal.show();
+        }, 120000);
+
+        // Додај listener за "Затвори" копчето
+        document.getElementById("closeModal").addEventListener("click", function () {
+            var modalElement = document.getElementById("instagramModal");
+            var modal = bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+        });
+    });
+</script>
+
+</body>
+</html>
